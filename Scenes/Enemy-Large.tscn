@@ -1,0 +1,94 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Images/aircraft_large_idle_2.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_4.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/aircraft_large_underattack.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Images/aircraft_large_idle_1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_3.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_6.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Images/aircraft_large_explode_5.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sounds/enemy3_down.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/e3_fly_down.wav" type="AudioStream" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Died",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Hit",
+"speed": 5.0
+} ]
+
+[sub_resource type="DynamicFont" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 1, 0.0627451, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.6, 0.6, 0.6, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=4]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Enemy-Large" type="Area2D"]
+script = ExtResource( 1 )
+speed = 150
+width = 245
+height = 279
+score = 500
+life = 10
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+playing = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 5, -59, -11, -59, -16, -51, -43, -60, -58, -75, -58, -126, -70, -126, -70, -17, -57, -17, -63, 5, -63, 41, -85, 59, -85, 70, -66, 88, -40, 113, -24, 112, -19, 105, 14, 105, 18, 112, 37, 112, 79, 71, 79, 59, 59, 41, 58, -1, 49, -15, 63, -15, 64, -125, 52, -125, 52, -74, 36, -57, 10, -50 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -2.5, -5.5 )
+scale = Vector2( 8.45, 12.15 )
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = -87.0
+margin_top = -138.0
+margin_right = 82.0
+margin_bottom = -130.0
+custom_fonts/font = SubResource( 2 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Die" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+
+[node name="FlyDown" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

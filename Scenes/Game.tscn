@@ -1,0 +1,416 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://Assets/Images/BJ.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Fonts/ArtFont.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://Assets/Images/remain_bomb.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/pause_2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Images/life.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Images/pause.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/PauseButton.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Sounds/game_music.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/out_porp.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/game_over.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/use_bomb.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Fonts/MainFont.ttf" type="DynamicFontData" id=14]
+
+[sub_resource type="Animation" id=1]
+resource_name = "背景滚动"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 852 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Start"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Score:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -200, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("PauseButton:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 500, -0.25, 0, 0.25, 0, 500, -0.25, 0, 0.25, 0, 432, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.2, 1 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("LifeNumber:rect_position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( -110, -0.25, 0, 0.25, 0, -110, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 1 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("BombNumber:rect_position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 500, -0.25, 0, 0.25, 0, 500, -0.25, 0, 0.25, 0, 368, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 1 )
+}
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.313726 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color( 0.431373, 0.8, 1, 0.313726 )
+shadow_size = 10
+
+[sub_resource type="DynamicFont" id=6]
+size = 60
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 35
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+extra_spacing_top = 10
+extra_spacing_bottom = 10
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 0.470588 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color( 0, 0, 0, 0.0784314 )
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 1, 1, 0.392157 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color( 0, 0, 0, 0.0784314 )
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 1, 1, 1, 0.313726 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color( 0, 0, 0, 0.0784314 )
+shadow_size = 5
+
+[sub_resource type="Animation" id=12]
+resource_name = "GameOver"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Panel:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 540, -0.25, 0, 0.25, 0, 540, -0.25, 0, 0.25, 0, 60, -0.9, -150.758, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Panel:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 1 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "主角登场"
+length = 1.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Player:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 920, -0.25, 0, 0.25, 0, 700, -1.1, -104.56, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.5 )
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 480.0
+margin_bottom = 852.012
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Background2" type="TextureRect" parent="Background"]
+margin_top = -852.0
+margin_right = 480.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background"]
+"anims/背景滚动" = SubResource( 1 )
+
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Supply" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 240, 920 )
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 480, 852 )
+
+[node name="Score" type="Label" parent="GUI"]
+margin_left = -200.0
+margin_right = -24.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 3 )
+text = "Score:0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseButton" type="TextureButton" parent="GUI"]
+pause_mode = 2
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 20.0
+margin_top = 8.0
+margin_right = 62.0
+margin_bottom = 53.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 8 )
+texture_hover = ExtResource( 6 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeNumber" type="Label" parent="GUI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -110.0
+margin_top = -52.0
+margin_right = -6.0
+margin_bottom = 3.0
+custom_fonts/font = SubResource( 3 )
+text = "3"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Life" type="TextureRect" parent="GUI/LifeNumber"]
+margin_top = -1.0
+margin_right = 75.0
+margin_bottom = 49.0
+texture = ExtResource( 7 )
+
+[node name="BombNumber" type="Label" parent="GUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -57.0
+margin_right = 132.0
+custom_fonts/font = SubResource( 3 )
+text = "×3"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bomb" type="TextureRect" parent="GUI/BombNumber"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI"]
+autoplay = "Start"
+anims/Start = SubResource( 4 )
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 480, 852 )
+
+[node name="Panel" type="Panel" parent="GameOver"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = 114.0
+margin_right = 200.0
+margin_bottom = 845.999
+rect_pivot_offset = Vector2( 0, 366 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Title" type="Label" parent="GameOver/Panel"]
+anchor_right = 1.0
+margin_bottom = 196.0
+custom_fonts/font = SubResource( 6 )
+text = "GameOver!"
+align = 1
+valign = 1
+
+[node name="YourScore" type="Label" parent="GameOver/Panel"]
+anchor_right = 1.0
+margin_top = 188.0
+margin_bottom = 324.0
+custom_fonts/font = SubResource( 7 )
+text = "YourScore:0"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="BestScore" type="Label" parent="GameOver/Panel"]
+anchor_right = 1.0
+margin_top = 324.0
+margin_bottom = 460.0
+custom_fonts/font = SubResource( 7 )
+text = "BestScore:0"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Btns" type="VBoxContainer" parent="GameOver/Panel"]
+margin_left = 48.0
+margin_top = 468.0
+margin_right = 352.0
+margin_bottom = 656.0
+custom_constants/separation = 40
+
+[node name="Menu" type="Button" parent="GameOver/Panel/Btns"]
+margin_right = 304.0
+margin_bottom = 68.0
+focus_mode = 0
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+text = "返回菜单"
+
+[node name="Quit" type="Button" parent="GameOver/Panel/Btns"]
+margin_top = 108.0
+margin_right = 304.0
+margin_bottom = 176.0
+focus_mode = 0
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+text = "退出游戏"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver"]
+anims/GameOver = SubResource( 12 )
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="EnemySmallAddTimer" type="Timer" parent="Timers"]
+process_mode = 0
+wait_time = 5.0
+
+[node name="EnemyMiddleAddTimer" type="Timer" parent="Timers"]
+process_mode = 0
+wait_time = 5.0
+
+[node name="EnemyLargeAddTimer" type="Timer" parent="Timers"]
+process_mode = 0
+wait_time = 5.0
+
+[node name="DoubleTimer" type="Timer" parent="Timers"]
+
+[node name="BombTimer" type="Timer" parent="Timers"]
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="GameStart" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 11 )
+autoplay = true
+
+[node name="GameOver" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 12 )
+
+[node name="UseBomb" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 13 )
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 10 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "主角登场"
+"anims/主角登场" = SubResource( 2 )
+
+[connection signal="pressed" from="GUI/PauseButton" to="GUI/PauseButton" method="_on_PauseButton_pressed"]
+[connection signal="pressed" from="GameOver/Panel/Btns/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="pressed" from="GameOver/Panel/Btns/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="timeout" from="Timers/EnemySmallAddTimer" to="." method="_on_EnemySmallAddTimer_timeout"]
+[connection signal="timeout" from="Timers/EnemyMiddleAddTimer" to="." method="_on_EnemyMiddleAddTimer_timeout"]
+[connection signal="timeout" from="Timers/EnemyLargeAddTimer" to="." method="_on_EnemyLargeAddTimer_timeout"]
+[connection signal="timeout" from="Timers/DoubleTimer" to="." method="_on_DoubleTimer_timeout"]
+[connection signal="timeout" from="Timers/BombTimer" to="." method="_on_BombTimer_timeout"]
+[connection signal="finished" from="Sounds/BGM" to="." method="_on_BGM_finished"]
